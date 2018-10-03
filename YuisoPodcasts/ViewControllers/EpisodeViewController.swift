@@ -32,7 +32,8 @@ class EpisodeViewController: UITableViewController {
     //MARK:- table config
     
     fileprivate func setupTableView(){
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        let nib = UINib(nibName: "EpisodeCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellID)
         tableView.tableFooterView = UIView()
     }
     
@@ -41,11 +42,16 @@ class EpisodeViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        cell.textLabel?.text = episodes[indexPath.row].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! EpisodeCell
+        let episode = episodes[indexPath.row]
+        cell.episode = episode
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 134
+    }
+    
     //MARK:- fetch Episodes
     fileprivate func fetchEpisodes(){
         guard let feedUrl = podcast?.feedUrl else {return}
@@ -60,7 +66,7 @@ class EpisodeViewController: UITableViewController {
                 
                 var episodes = [Episode]()
                 feed.items?.forEach({ (feedItem) in
-                    let episode = Episode(title: feedItem.title ?? "")
+                    let episode = Episode(feedItem: feedItem)
                     episodes.append(episode)
                 })
                 self.episodes = episodes

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FeedKit
 
 struct Podcast:Decodable {
     var trackName: String?
@@ -17,5 +18,14 @@ struct Podcast:Decodable {
 }
 
 struct Episode {
+    let pubDate: Date
+    let description: String
     let title: String
+    
+    init(feedItem: RSSFeedItem) {
+        self.title = feedItem.title ?? ""
+        self.description = feedItem.description ?? ""
+        self.pubDate = feedItem.pubDate ?? Date()
+        
+    }
 }
