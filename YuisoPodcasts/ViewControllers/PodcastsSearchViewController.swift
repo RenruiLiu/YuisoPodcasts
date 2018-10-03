@@ -11,7 +11,7 @@ import Alamofire
 
 class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
 
-    let cellID = "cellID"
+    fileprivate let cellID = "cellID"
     var podcasts = [Podcast]()
     
     override func viewDidLoad() {
@@ -57,7 +57,14 @@ class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 250
+        return self.podcasts.count > 0 ? 0 : 250
+    }
+    
+    // 5: didSelect
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let episodeVC = EpisodeViewController()
+        episodeVC.podcast = podcasts[indexPath.row]
+        navigationController?.pushViewController(episodeVC, animated: true)
     }
     
     //MARK:- Search
@@ -65,6 +72,7 @@ class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
     let searchController = UISearchController(searchResultsController: nil)
 
     fileprivate func setupSearchBar() {
+        self.definesPresentationContext = true // don't cover the new controller(so can see nav bar)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.dimsBackgroundDuringPresentation = false

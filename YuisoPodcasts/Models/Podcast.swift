@@ -16,3 +16,6 @@ struct Podcast:Decodable {
     var feedUrl: String?
 }
 
+struct Episode {
+    let title: String
+}
