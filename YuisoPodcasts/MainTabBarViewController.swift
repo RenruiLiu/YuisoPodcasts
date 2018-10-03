@@ -12,22 +12,29 @@ class MainTabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        UINavigationBar.appearance().prefersLargeTitles = true
         tabBar.tintColor = .purple
         
-        let favoritesController = ViewController()
-        favoritesController.tabBarItem.title = "Favorites"
-        favoritesController.tabBarItem.image = #imageLiteral(resourceName: "favorites")
-        
-        let searchNavController = UINavigationController(rootViewController: ViewController())
-        searchNavController.tabBarItem.title = "Search"
-        searchNavController.tabBarItem.image = #imageLiteral(resourceName: "search")
-        
-        let downloadController = ViewController()
-        downloadController.tabBarItem.title = "Downloads"
-        downloadController.tabBarItem.image = #imageLiteral(resourceName: "downloads")
-        
-        viewControllers = [favoritesController,searchNavController,downloadController]
     }
+    
+    //MARK:- Setup Functions
+    
+    fileprivate func setupViewControllers(){
+        viewControllers = [
+            generateNavigationController(with: ViewController(), title: "Favorites", image: #imageLiteral(resourceName: "favorites")),
+            generateNavigationController(with: ViewController(), title: "Search", image: #imageLiteral(resourceName: "search")),
+            generateNavigationController(with: ViewController(), title: "Downloads", image: #imageLiteral(resourceName: "downloads"))
+        ]
+    }
+    
+    //MARK:- Helper Functions
 
+    fileprivate func generateNavigationController(with rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController {
+        let navController = UINavigationController(rootViewController: rootViewController)
+        rootViewController.navigationItem.title = title
+        navController.tabBarItem.title = title
+        navController.tabBarItem.image = image
+        return navController
+    }
 }
+
