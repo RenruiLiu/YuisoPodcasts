@@ -13,7 +13,7 @@
 1. `iOS 11.4+`  
 
 # Used libraries
-Network -> [Alamofire](https://github.com/Alamofire/Alamofire)
+Network -> [Alamofire](https://github.com/Alamofire/Alamofire)  
 iTunes API -> [iTunes Search API](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/)
 
 # TODO
