@@ -13,6 +13,7 @@
 1. `iOS 11.4+`  
 
 # Used libraries
+Photo Filter -> [Alamofire](https://github.com/Alamofire/Alamofire)
 
 # TODO
 
