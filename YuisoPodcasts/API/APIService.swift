@@ -19,7 +19,7 @@ class APIService {
     func fetchPodcasts(searchText: String, completionHandler: @escaping ([Podcast])->()){
         
         // request
-        //let parameters = ["term": searchText]
+        //let parameters = ["term": searchText, "media": "music"]
         let parameters = ["term": searchText, "media": "podcast"]
         Alamofire.request(iTunesSearchURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseData { (dataResponse) in
             if let err = dataResponse.error {

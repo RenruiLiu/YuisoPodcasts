@@ -12,11 +12,7 @@ import Alamofire
 class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
 
     let cellID = "cellID"
-    var podcasts = [
-        Podcast(trackName: "YuisoPodcast", artistName: "Yuiso"),
-        Podcast(trackName: "YuisoPodcast1", artistName: "Yuiso1"),
-        Podcast(trackName: "YuisoPodcast2", artistName: "Yuiso2"),
-    ]
+    var podcasts = [Podcast]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +25,9 @@ class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
     
     // 1: register cell
     fileprivate func setupTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.tableFooterView = UIView()
+        let nib = UINib(nibName: "PodcastCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellID)
     }
     
     // 2: numberOfRows
@@ -39,14 +37,27 @@ class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
     
     // 3: cellforRow, dequeue cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        
-        let podcast = self.podcasts[indexPath.row]
-        cell.textLabel?.text = "\(podcast.trackName ?? "")\n\(podcast.artistName ?? "")"
-        cell.textLabel?.numberOfLines = -1
-        cell.imageView?.image = #imageLiteral(resourceName: "appicon")
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PodcastCell
+        cell.podcast = self.podcasts[indexPath.row]
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 132
+    }
+    
+    // 4: header
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "No results, please enter a search query."
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        label.textColor = .purple
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 250
     }
     
     //MARK:- Search
