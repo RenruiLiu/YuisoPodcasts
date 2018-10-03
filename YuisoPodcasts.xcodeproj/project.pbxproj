@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66925946E9EC525D6B1C48F9 /* Pods_YuisoPodcasts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EAA1F98686B4E9C1BBEC06C /* Pods_YuisoPodcasts.framework */; };
 		EA85803021646F3A00EDB26D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA85802F21646F3A00EDB26D /* AppDelegate.swift */; };
 		EA85803221646F3A00EDB26D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA85803121646F3A00EDB26D /* ViewController.swift */; };
 		EA85803521646F3A00EDB26D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA85803321646F3A00EDB26D /* Main.storyboard */; };
 		EA85803721646F3E00EDB26D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA85803621646F3E00EDB26D /* Assets.xcassets */; };
 		EA85803A21646F3E00EDB26D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA85803821646F3E00EDB26D /* LaunchScreen.storyboard */; };
 		EA85804221646FA100EDB26D /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA85804121646FA100EDB26D /* MainTabBarViewController.swift */; };
+		EA858045216498D100EDB26D /* PodcastsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA858044216498D100EDB26D /* PodcastsSearchViewController.swift */; };
+		EA8580482164994300EDB26D /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8580472164994300EDB26D /* Podcast.swift */; };
+		EA85804B2164B63000EDB26D /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA85804A2164B63000EDB26D /* APIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6EAA1F98686B4E9C1BBEC06C /* Pods_YuisoPodcasts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YuisoPodcasts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B88E78EF6FB0191A3D33C5D1 /* Pods-YuisoPodcasts.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YuisoPodcasts.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YuisoPodcasts/Pods-YuisoPodcasts.debug.xcconfig"; sourceTree = "<group>"; };
+		CF29A68A7C500589BE17C2BB /* Pods-YuisoPodcasts.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YuisoPodcasts.release.xcconfig"; path = "Pods/Target Support Files/Pods-YuisoPodcasts/Pods-YuisoPodcasts.release.xcconfig"; sourceTree = "<group>"; };
 		EA85802C21646F3A00EDB26D /* YuisoPodcasts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YuisoPodcasts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA85802F21646F3A00EDB26D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA85803121646F3A00EDB26D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +31,9 @@
 		EA85803921646F3E00EDB26D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EA85803B21646F3E00EDB26D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA85804121646FA100EDB26D /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
+		EA858044216498D100EDB26D /* PodcastsSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastsSearchViewController.swift; sourceTree = "<group>"; };
+		EA8580472164994300EDB26D /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
+		EA85804A2164B63000EDB26D /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +41,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66925946E9EC525D6B1C48F9 /* Pods_YuisoPodcasts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		54C53DE2294EF035E21CDF9D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B88E78EF6FB0191A3D33C5D1 /* Pods-YuisoPodcasts.debug.xcconfig */,
+				CF29A68A7C500589BE17C2BB /* Pods-YuisoPodcasts.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		8608F35716A27A5AEB84DDE2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6EAA1F98686B4E9C1BBEC06C /* Pods_YuisoPodcasts.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EA85802321646F3A00EDB26D = {
 			isa = PBXGroup;
 			children = (
 				EA85802E21646F3A00EDB26D /* YuisoPodcasts */,
 				EA85802D21646F3A00EDB26D /* Products */,
+				54C53DE2294EF035E21CDF9D /* Pods */,
+				8608F35716A27A5AEB84DDE2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +86,42 @@
 		EA85802E21646F3A00EDB26D /* YuisoPodcasts */ = {
 			isa = PBXGroup;
 			children = (
+				EA8580492164B61F00EDB26D /* API */,
+				EA8580462164993000EDB26D /* Models */,
+				EA8580432164989C00EDB26D /* ViewControllers */,
 				EA85802F21646F3A00EDB26D /* AppDelegate.swift */,
-				EA85803121646F3A00EDB26D /* ViewController.swift */,
 				EA85803321646F3A00EDB26D /* Main.storyboard */,
 				EA85803621646F3E00EDB26D /* Assets.xcassets */,
 				EA85803821646F3E00EDB26D /* LaunchScreen.storyboard */,
 				EA85803B21646F3E00EDB26D /* Info.plist */,
-				EA85804121646FA100EDB26D /* MainTabBarViewController.swift */,
 			);
 			path = YuisoPodcasts;
+			sourceTree = "<group>";
+		};
+		EA8580432164989C00EDB26D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EA85803121646F3A00EDB26D /* ViewController.swift */,
+				EA85804121646FA100EDB26D /* MainTabBarViewController.swift */,
+				EA858044216498D100EDB26D /* PodcastsSearchViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EA8580462164993000EDB26D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EA8580472164994300EDB26D /* Podcast.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EA8580492164B61F00EDB26D /* API */ = {
+			isa = PBXGroup;
+			children = (
+				EA85804A2164B63000EDB26D /* APIService.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +131,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA85803E21646F3E00EDB26D /* Build configuration list for PBXNativeTarget "YuisoPodcasts" */;
 			buildPhases = (
+				111BC631B741A4F9E4132A5F /* [CP] Check Pods Manifest.lock */,
 				EA85802821646F3A00EDB26D /* Sources */,
 				EA85802921646F3A00EDB26D /* Frameworks */,
 				EA85802A21646F3A00EDB26D /* Resources */,
+				A67E332A0C6B6D007058FD33 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +192,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		111BC631B741A4F9E4132A5F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YuisoPodcasts-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A67E332A0C6B6D007058FD33 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-YuisoPodcasts/Pods-YuisoPodcasts-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YuisoPodcasts/Pods-YuisoPodcasts-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EA85802821646F3A00EDB26D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -141,6 +247,9 @@
 				EA85804221646FA100EDB26D /* MainTabBarViewController.swift in Sources */,
 				EA85803221646F3A00EDB26D /* ViewController.swift in Sources */,
 				EA85803021646F3A00EDB26D /* AppDelegate.swift in Sources */,
+				EA858045216498D100EDB26D /* PodcastsSearchViewController.swift in Sources */,
+				EA85804B2164B63000EDB26D /* APIService.swift in Sources */,
+				EA8580482164994300EDB26D /* Podcast.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +393,7 @@
 		};
 		EA85803F21646F3E00EDB26D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B88E78EF6FB0191A3D33C5D1 /* Pods-YuisoPodcasts.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -302,6 +412,7 @@
 		};
 		EA85804021646F3E00EDB26D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF29A68A7C500589BE17C2BB /* Pods-YuisoPodcasts.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

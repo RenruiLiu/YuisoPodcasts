@@ -1,0 +1,6 @@
+framework module Pods_YuisoPodcasts {
+  umbrella header "Pods-YuisoPodcasts-umbrella.h"
+
+  export *
+  module * { export * }
+}
