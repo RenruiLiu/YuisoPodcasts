@@ -1,0 +1,15 @@
+//
+//  String.swift
+//  YuisoPodcasts
+//
+//  Created by Renrui Liu on 4/10/18.
+//  Copyright © 2018 Renrui Liu. All rights reserved.
+//
+
+import Foundation
+
+extension String {
+    func toSecureHTTPS() -> String {
+        return self.contains("https") ? self : self.replacingOccurrences(of: "http", with: "https")
+    }
+}

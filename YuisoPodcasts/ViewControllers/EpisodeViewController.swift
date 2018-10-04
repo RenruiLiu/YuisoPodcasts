@@ -52,34 +52,24 @@ class EpisodeViewController: UITableViewController {
         return 134
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let window = UIApplication.shared.keyWindow
+        let playerView = Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)?.first as! PlayerView
+        playerView.frame = window!.frame
+        let episode = self.episodes[indexPath.row]
+        playerView.episode = episode
+        
+        window?.addSubview(playerView)
+    }
+    
     //MARK:- fetch Episodes
     fileprivate func fetchEpisodes(){
-        guard let feedUrl = podcast?.feedUrl else {return}
-        let secureFeedUrl = feedUrl.contains("https") ? feedUrl : feedUrl.replacingOccurrences(of: "http", with: "https") // avoid App Transport Security block issue
-        guard let url = URL(string: secureFeedUrl) else {return}
-        let parser = FeedParser(URL: url)
-        parser.parseAsync { (result) in
-            
-            // result of itunes feedurl will always be rss
-            switch result {
-            case let .rss(feed):
-                
-                var episodes = [Episode]()
-                feed.items?.forEach({ (feedItem) in
-                    let episode = Episode(feedItem: feedItem)
-                    episodes.append(episode)
-                })
-                self.episodes = episodes
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                
-                break
-            case .atom(_): break
-            case .json(_): break
-            case let .failure(error):
-                print("Failed to parse url:", error)
-                break
+        guard let feedUrl = podcast?.feedUrl?.toSecureHTTPS() else {return}
+
+        APIService.shared.fetchEpisodes(feedUrl: feedUrl) { (episodes) in
+            self.episodes = episodes
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }

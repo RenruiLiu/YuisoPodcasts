@@ -18,12 +18,17 @@ class MainTabBarViewController: UITabBarController {
         setupViewControllers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // set default tab is search
+        self.selectedIndex = 1
+    }
+    
     //MARK:- Setup Functions
     
     fileprivate func setupViewControllers(){
         viewControllers = [
-            generateNavigationController(with: PodcastsSearchViewController(), title: "Search", image: #imageLiteral(resourceName: "search")),
             generateNavigationController(with: ViewController(), title: "Favorites", image: #imageLiteral(resourceName: "favorites")),
+            generateNavigationController(with: PodcastsSearchViewController(), title: "Search", image: #imageLiteral(resourceName: "search")),
             generateNavigationController(with: ViewController(), title: "Downloads", image: #imageLiteral(resourceName: "downloads"))
         ]
     }

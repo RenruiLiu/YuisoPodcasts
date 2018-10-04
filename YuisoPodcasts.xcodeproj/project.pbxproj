@@ -22,6 +22,10 @@
 		EA8580522164F23E00EDB26D /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8580512164F23E00EDB26D /* EpisodeViewController.swift */; };
 		EAFB958121652D2E00D551D8 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB957F21652D2E00D551D8 /* EpisodeCell.swift */; };
 		EAFB958221652D2E00D551D8 /* EpisodeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFB958021652D2E00D551D8 /* EpisodeCell.xib */; };
+		EAFB95852165D16700D551D8 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB95842165D16700D551D8 /* String.swift */; };
+		EAFB95872165D23C00D551D8 /* RSSFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB95862165D23C00D551D8 /* RSSFeed.swift */; };
+		EAFB95892165D8DC00D551D8 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFB95882165D8DC00D551D8 /* PlayerView.xib */; };
+		EAFB958B2165DC7500D551D8 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958A2165DC7500D551D8 /* PlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,10 @@
 		EA8580512164F23E00EDB26D /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
 		EAFB957F21652D2E00D551D8 /* EpisodeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
 		EAFB958021652D2E00D551D8 /* EpisodeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EpisodeCell.xib; sourceTree = "<group>"; };
+		EAFB95842165D16700D551D8 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		EAFB95862165D23C00D551D8 /* RSSFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSFeed.swift; sourceTree = "<group>"; };
+		EAFB95882165D8DC00D551D8 /* PlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
+		EAFB958A2165DC7500D551D8 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +104,7 @@
 		EA85802E21646F3A00EDB26D /* YuisoPodcasts */ = {
 			isa = PBXGroup;
 			children = (
+				EAFB95832165D15000D551D8 /* Extensions */,
 				EA8580492164B61F00EDB26D /* API */,
 				EA85804C2164DED400EDB26D /* Views */,
 				EA8580462164993000EDB26D /* Models */,
@@ -143,8 +152,19 @@
 				EA85804F2164E1A400EDB26D /* PodcastCell.swift */,
 				EAFB957F21652D2E00D551D8 /* EpisodeCell.swift */,
 				EAFB958021652D2E00D551D8 /* EpisodeCell.xib */,
+				EAFB95882165D8DC00D551D8 /* PlayerView.xib */,
+				EAFB958A2165DC7500D551D8 /* PlayerView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		EAFB95832165D15000D551D8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EAFB95842165D16700D551D8 /* String.swift */,
+				EAFB95862165D23C00D551D8 /* RSSFeed.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +232,7 @@
 				EAFB958221652D2E00D551D8 /* EpisodeCell.xib in Resources */,
 				EA85804E2164DF0A00EDB26D /* PodcastCell.xib in Resources */,
 				EA85803521646F3A00EDB26D /* Main.storyboard in Resources */,
+				EAFB95892165D8DC00D551D8 /* PlayerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +296,9 @@
 			files = (
 				EA85804221646FA100EDB26D /* MainTabBarViewController.swift in Sources */,
 				EA85803221646F3A00EDB26D /* ViewController.swift in Sources */,
+				EAFB95872165D23C00D551D8 /* RSSFeed.swift in Sources */,
+				EAFB958B2165DC7500D551D8 /* PlayerView.swift in Sources */,
+				EAFB95852165D16700D551D8 /* String.swift in Sources */,
 				EA85803021646F3A00EDB26D /* AppDelegate.swift in Sources */,
 				EA858045216498D100EDB26D /* PodcastsSearchViewController.swift in Sources */,
 				EA85804B2164B63000EDB26D /* APIService.swift in Sources */,

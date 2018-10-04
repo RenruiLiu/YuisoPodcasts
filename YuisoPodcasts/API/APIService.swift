@@ -8,13 +8,30 @@
 
 import Foundation
 import Alamofire
+import FeedKit
 
 class APIService {
+    static let shared = APIService()
+    // so can call functions in the class like: APISerice.shared.fetchxxx()
     
     // itunes API
     let iTunesSearchURL = "https://itunes.apple.com/search"
-
-    static let shared = APIService()
+    
+    func fetchEpisodes(feedUrl: String, completionHandler: @escaping ([Episode])->()){
+        guard let url = URL(string: feedUrl) else {return}
+        let parser = FeedParser(URL: url)
+        parser.parseAsync { (result) in
+            
+            if let err = result.error {
+                print("Failed to parse url:", err)
+                return
+            }
+            
+            // result of itunes feedurl will always be rss
+            guard let feed = result.rssFeed else {return}
+            completionHandler(feed.toEpisode())
+        }
+    }
     
     func fetchPodcasts(searchText: String, completionHandler: @escaping ([Podcast])->()){
         

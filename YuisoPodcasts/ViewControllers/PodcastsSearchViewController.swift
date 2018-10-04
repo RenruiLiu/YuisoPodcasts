@@ -50,6 +50,7 @@ class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "No results, please enter a search query."
+        label.numberOfLines = 2
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .purple
