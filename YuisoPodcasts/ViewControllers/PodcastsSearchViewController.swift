@@ -19,6 +19,8 @@ class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
 
         setupSearchBar()
         setupTableView()
+        
+        searchBar(searchController.searchBar, textDidChange: "Voong")
     }
     
     //MARK:- table config
@@ -79,11 +81,20 @@ class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
     }
+    
+    // input delay timer
+    var timer: Timer?
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
-            // load the data into table and refresh table
-            self.podcasts = podcasts
-            self.tableView.reloadData()
-        }
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+
+            APIService.shared.fetchPodcasts(searchText: searchText) { (podcasts) in
+                // load the data into table and refresh table
+                self.podcasts = podcasts
+                self.tableView.reloadData()
+            }
+        })
     }
 }

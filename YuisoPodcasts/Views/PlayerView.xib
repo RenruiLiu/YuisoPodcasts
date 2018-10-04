@@ -31,31 +31,39 @@
                                 <action selector="handleDismiss:" destination="aZO-z4-Nuk" eventType="touchUpInside" id="TJi-IA-V1f"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appicon" translatesAutoresizingMaskIntoConstraints="NO" id="lzm-Dj-K0s">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appicon" translatesAutoresizingMaskIntoConstraints="NO" id="lzm-Dj-K0s">
                             <rect key="frame" x="0.0" y="49" width="366" height="366"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="lzm-Dj-K0s" secondAttribute="height" id="inR-YG-wta"/>
                             </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </imageView>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ksr-rf-x5W">
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ksr-rf-x5W">
                             <rect key="frame" x="-2" y="420" width="370" height="37"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="36" id="t1a-Cx-ytL"/>
                             </constraints>
+                            <connections>
+                                <action selector="handleCurrentTimeSliderChange:" destination="aZO-z4-Nuk" eventType="valueChanged" id="zS4-v4-WFo"/>
+                            </connections>
                         </slider>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cRk-Qg-Ovq">
                             <rect key="frame" x="0.0" y="461" width="366" height="22"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="00:00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4aL-4a-uTD">
-                                    <rect key="frame" x="0.0" y="0.0" width="293.66666666666669" height="22"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4aL-4a-uTD">
+                                    <rect key="frame" x="0.0" y="0.0" width="330.66666666666669" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="88:88:88" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzj-mK-qD2">
-                                    <rect key="frame" x="293.66666666666669" y="0.0" width="72.333333333333314" height="22"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzj-mK-qD2">
+                                    <rect key="frame" x="330.66666666666669" y="0.0" width="35.333333333333314" height="22"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -88,11 +96,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="217"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KA8-Hj-jDk">
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KA8-Hj-jDk">
                                     <rect key="frame" x="55.666666666666671" y="0.0" width="44" height="217"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44" id="tSz-ql-8uw"/>
                                     </constraints>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="rewind" image="rewind15"/>
                                     <connections>
                                         <action selector="rewindBtn:" destination="aZO-z4-Nuk" eventType="touchUpInside" id="9U0-fs-fPU"/>
@@ -102,11 +111,12 @@
                                     <rect key="frame" x="105.33333333333334" y="0.0" width="50" height="217"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6W-YQ-tmv">
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6W-YQ-tmv">
                                     <rect key="frame" x="156" y="0.0" width="54" height="217"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="54" id="EXf-pq-1I9"/>
                                     </constraints>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="play" image="play"/>
                                     <connections>
                                         <action selector="playPauseBtn:" destination="aZO-z4-Nuk" eventType="touchUpInside" id="YPj-UL-g8I"/>
@@ -116,11 +126,12 @@
                                     <rect key="frame" x="210.66666666666666" y="0.0" width="49.999999999999972" height="217"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ok1-Lk-lwC">
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ok1-Lk-lwC">
                                     <rect key="frame" x="266.33333333333331" y="0.0" width="44" height="217"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="44" id="EWM-6m-KT8"/>
                                     </constraints>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="fastforward" image="fastforward15"/>
                                     <connections>
                                         <action selector="fastforwardBtn:" destination="aZO-z4-Nuk" eventType="touchUpInside" id="oB1-Hj-pTs"/>
@@ -141,8 +152,11 @@
                                         <constraint firstAttribute="width" constant="34" id="bov-BX-Hiw"/>
                                     </constraints>
                                 </imageView>
-                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ayK-Mu-Bvu">
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ayK-Mu-Bvu">
                                     <rect key="frame" x="32" y="0.0" width="302" height="35"/>
+                                    <connections>
+                                        <action selector="handleVolumeChange:" destination="aZO-z4-Nuk" eventType="valueChanged" id="p38-GT-t5b"/>
+                                    </connections>
                                 </slider>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="max_volume" translatesAutoresizingMaskIntoConstraints="NO" id="Wk9-D3-qVJ">
                                     <rect key="frame" x="332" y="0.0" width="34" height="34"/>
@@ -168,8 +182,12 @@
             <viewLayoutGuide key="safeArea" id="F4e-Yu-Qt7"/>
             <connections>
                 <outlet property="authorLabel" destination="M8i-Bz-m8U" id="BRS-JC-2UM"/>
+                <outlet property="currentTimeLabel" destination="4aL-4a-uTD" id="qSW-1s-3d6"/>
+                <outlet property="currentTimeSlider" destination="Ksr-rf-x5W" id="Ccr-UK-DIm"/>
+                <outlet property="durationLabel" destination="gzj-mK-qD2" id="W7E-SZ-hEu"/>
                 <outlet property="episodeImageView" destination="lzm-Dj-K0s" id="kyc-rA-RTu"/>
                 <outlet property="episodeTitleLabel" destination="3bL-am-Rpc" id="eiL-rw-fX2"/>
+                <outlet property="playbtn" destination="Z6W-YQ-tmv" id="C5f-ni-C6F"/>
             </connections>
             <point key="canvasLocation" x="-26" y="216"/>
         </view>

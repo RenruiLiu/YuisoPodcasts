@@ -19,17 +19,22 @@ class APIService {
     
     func fetchEpisodes(feedUrl: String, completionHandler: @escaping ([Episode])->()){
         guard let url = URL(string: feedUrl) else {return}
-        let parser = FeedParser(URL: url)
-        parser.parseAsync { (result) in
-            
-            if let err = result.error {
-                print("Failed to parse url:", err)
-                return
+        
+        // feedParser is parsing the url synchronously (block the UI thread)
+        // so put it in a background thread
+        DispatchQueue.global(qos: .background).async {
+            let parser = FeedParser(URL: url)
+            parser.parseAsync { (result) in
+                
+                if let err = result.error {
+                    print("Failed to parse url:", err)
+                    return
+                }
+                
+                // result of itunes feedurl will always be rss
+                guard let feed = result.rssFeed else {return}
+                completionHandler(feed.toEpisode())
             }
-            
-            // result of itunes feedurl will always be rss
-            guard let feed = result.rssFeed else {return}
-            completionHandler(feed.toEpisode())
         }
     }
     
