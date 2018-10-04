@@ -4,7 +4,7 @@
 ![](https://img.shields.io/badge/language-swift4.2-brightgreen.svg)
 
 # Download
-
+Clone this repo to your local disk and run in xcode
 
 # Features
 
