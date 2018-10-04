@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 class PlayerView: UIView {
     
@@ -16,6 +17,8 @@ class PlayerView: UIView {
             authorLabel.text = episode.author
             guard let url = URL(string: episode.imageUrl ?? "") else {return}
             episodeImageView.sd_setImage(with: url, completed: nil)
+            
+            playEpisode()
         }
     }
 
@@ -30,5 +33,19 @@ class PlayerView: UIView {
     @IBAction func rewindBtn(_ sender: UIButton) {
     }
     @IBAction func fastforwardBtn(_ sender: UIButton) {
+    }
+    
+    let player: AVPlayer = {
+        let avPlayer = AVPlayer()
+        avPlayer.automaticallyWaitsToMinimizeStalling = false
+        return avPlayer
+    }()
+    
+    fileprivate func playEpisode(){
+        
+        guard let url = URL(string: episode.streamUrl) else {return}
+        let playerItem = AVPlayerItem(url: url)
+        player.replaceCurrentItem(with: playerItem)
+        player.play()
     }
 }

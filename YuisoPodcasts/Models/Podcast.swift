@@ -23,6 +23,7 @@ struct Episode {
     let title: String
     var imageUrl: String?
     let author: String
+    let streamUrl: String
     
     init(feedItem: RSSFeedItem) {
         title = feedItem.title ?? ""
@@ -30,5 +31,6 @@ struct Episode {
         pubDate = feedItem.pubDate ?? Date()
         imageUrl = feedItem.iTunes?.iTunesImage?.attributes?.href
         author = feedItem.iTunes?.iTunesAuthor ?? ""
+        streamUrl = feedItem.enclosure?.attributes?.url ?? ""
     }
 }
