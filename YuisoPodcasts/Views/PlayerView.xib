@@ -18,6 +18,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hko-7V-Ard">
                     <rect key="frame" x="0.0" y="44" width="414" height="64"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7g-Ld-lq2">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="hsO-VU-HaD"/>
+                            </constraints>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="tEi-Q6-yQj">
                             <rect key="frame" x="8" y="8" width="398" height="48"/>
                             <subviews>
@@ -61,8 +68,11 @@
                     <color key="backgroundColor" white="0.66666666669999997" alpha="0.57108839897260277" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="64" id="3TV-0r-XxK"/>
+                        <constraint firstItem="D7g-Ld-lq2" firstAttribute="leading" secondItem="hko-7V-Ard" secondAttribute="leading" id="9LR-ow-D4l"/>
+                        <constraint firstItem="D7g-Ld-lq2" firstAttribute="top" secondItem="hko-7V-Ard" secondAttribute="top" id="BK2-3r-D0A"/>
                         <constraint firstItem="tEi-Q6-yQj" firstAttribute="top" secondItem="hko-7V-Ard" secondAttribute="top" constant="8" id="RVL-g8-Hab"/>
                         <constraint firstAttribute="bottom" secondItem="tEi-Q6-yQj" secondAttribute="bottom" constant="8" id="YWa-GY-b0e"/>
+                        <constraint firstAttribute="trailing" secondItem="D7g-Ld-lq2" secondAttribute="trailing" id="Z2x-qZ-fVu"/>
                         <constraint firstAttribute="trailing" secondItem="tEi-Q6-yQj" secondAttribute="trailing" constant="8" id="jLb-TE-Nsb"/>
                         <constraint firstItem="tEi-Q6-yQj" firstAttribute="leading" secondItem="hko-7V-Ard" secondAttribute="leading" constant="8" id="zrc-4D-8Kn"/>
                     </constraints>

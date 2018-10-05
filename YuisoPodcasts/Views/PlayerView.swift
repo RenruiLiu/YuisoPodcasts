@@ -194,6 +194,8 @@ class PlayerView: UIView {
         super.awakeFromNib()
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        addGestureRecognizer(panGesture)
         
         observePlayerStarts()
         observePlayerCurrentTime()
@@ -208,10 +210,48 @@ class PlayerView: UIView {
     @IBAction func handleDismiss(_ sender: UIButton) {
         let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController
         mainTabBarController?.minimizePlayerView()
+        panGesture.isEnabled = true
     }
     
     @objc func handleTapMaximize(){
         let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController
         mainTabBarController?.maximizePlayerView(episode: nil)
+        panGesture.isEnabled = false
+    }
+    
+    var panGesture: UIPanGestureRecognizer!
+    
+    @objc func handlePan(gesture: UIPanGestureRecognizer){
+        
+        if gesture.state == .changed {
+            handlePanChanged(gesture: gesture)
+        } else if gesture.state == .ended {
+            handlePanEnded(gesture: gesture)
+        }
+    }
+    
+    fileprivate func handlePanChanged(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: superview)
+
+        self.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        miniPlayerView.alpha = 1 + translation.y / 200
+        maximizedStackView.alpha = -translation.y / 200
+    }
+
+    fileprivate func handlePanEnded(gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: superview)
+        let velocity = gesture.velocity(in: superview)
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.transform = .identity
+            if translation.y < -200 || velocity.y < -500 {
+                let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController
+                mainTabBarController?.maximizePlayerView(episode: nil)
+                gesture.isEnabled = false
+            } else {
+                self.miniPlayerView.alpha = 1
+                self.maximizedStackView.alpha = 0
+            }
+        })
     }
 }
