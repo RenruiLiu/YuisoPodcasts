@@ -4,7 +4,7 @@
 ![](https://img.shields.io/badge/language-swift4.2-brightgreen.svg)
 
 # Download
-
+Clone this repo to your local disk and run in xcode
 
 # Features
 
@@ -14,9 +14,9 @@
 
 # Used libraries
 Network -> [Alamofire](https://github.com/Alamofire/Alamofire)  
-iTunes API -> [iTunes Search API](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/)
-loadImage -> [SDWebImage](https://github.com/rs/SDWebImage)
-parse RSS(XML) -> [FeedKit](https://github.com/nmdias/FeedKit)
+iTunes API -> [iTunes Search API](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/)  
+loadImage -> [SDWebImage](https://github.com/rs/SDWebImage)  
+parse RSS(XML) -> [FeedKit](https://github.com/nmdias/FeedKit)  
 
 # TODO
 
