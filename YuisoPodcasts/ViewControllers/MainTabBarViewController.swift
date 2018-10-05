@@ -16,6 +16,7 @@ class MainTabBarViewController: UITabBarController {
         tabBar.tintColor = .purple
         
         setupViewControllers()
+        setupPlayerView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,6 +34,46 @@ class MainTabBarViewController: UITabBarController {
         ]
     }
     
+    let playerView = PlayerView.initFromNib()
+    var maximizedTopAnchorConstraint: NSLayoutConstraint!
+    var minimizedTopAnchorConstraint: NSLayoutConstraint!
+    
+    fileprivate func setupPlayerView() {
+        view.insertSubview(playerView, belowSubview: tabBar)
+        playerView.anchor(top: nil, paddingTop: 0, bottom: view.bottomAnchor, paddingBottom: 0, left: view.leftAnchor, paddingLeft: 0, right: view.rightAnchor, paddingRight: 0, width: 0, height: 0)
+        
+        maximizedTopAnchorConstraint = playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
+        maximizedTopAnchorConstraint.isActive = true
+        minimizedTopAnchorConstraint = playerView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
+    }
+    
+    @objc func minimizePlayerView(){
+        maximizedTopAnchorConstraint.isActive = false
+        minimizedTopAnchorConstraint.isActive = true
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.tabBar.transform = .identity
+            
+            self.playerView.maximizedStackView.alpha = 0
+            self.playerView.miniPlayerView.alpha = 1
+        })
+    }
+    
+    func maximizePlayerView(episode: Episode?){
+        maximizedTopAnchorConstraint.isActive = true
+        maximizedTopAnchorConstraint.constant = 0
+        minimizedTopAnchorConstraint.isActive = false
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            self.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
+            
+            self.playerView.maximizedStackView.alpha = 1
+            self.playerView.miniPlayerView.alpha = 0
+        })
+        
+        if episode != nil {playerView.episode = episode}
+    }
+
     //MARK:- Helper Functions
 
     fileprivate func generateNavigationController(with rootViewController: UIViewController, title: String, image: UIImage) -> UIViewController {

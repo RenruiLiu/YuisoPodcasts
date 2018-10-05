@@ -33,14 +33,18 @@ class EpisodeViewController: UITableViewController {
     
     // present a loading circle while loading
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let activityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
-        activityIndicatorView.color = .darkGray
-        activityIndicatorView.startAnimating()
-        return activityIndicatorView
+        if episodes.isEmpty {
+            let activityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
+            activityIndicatorView.color = .darkGray
+            activityIndicatorView.startAnimating()
+            return activityIndicatorView
+        } else {
+            return UIView()
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return episodes.isEmpty ? 200 : 0
+        return 200
     }
     
     fileprivate func setupTableView(){
@@ -65,13 +69,11 @@ class EpisodeViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let window = UIApplication.shared.keyWindow
-        let playerView = Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)?.first as! PlayerView
-        playerView.frame = window!.frame
         let episode = self.episodes[indexPath.row]
-        playerView.episode = episode
+
+        let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController
+        mainTabBarController?.maximizePlayerView(episode: episode)
         
-        window?.addSubview(playerView)
     }
     
     //MARK:- fetch Episodes

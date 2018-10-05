@@ -8,8 +8,11 @@
 
 import UIKit
 import AVKit
+import EFAutoScrollLabel
 
 class PlayerView: UIView {
+
+    //MARK:- Setup
     
     var episode: Episode!{
         didSet{
@@ -18,15 +21,58 @@ class PlayerView: UIView {
             guard let url = URL(string: episode.imageUrl ?? "") else {return}
             episodeImageView.sd_setImage(with: url, completed: nil)
             
+            setupScrollTitle()
+            miniImageView.sd_setImage(with: url, completed: nil)
+            
             playEpisode()
             playbtn.isEnabled = false
         }
     }
+    
+    fileprivate func setupScrollTitle() {
+        let scrollLabel = EFAutoScrollLabel()
+        scrollLabel.font = UIFont.systemFont(ofSize: 15)
+        miniStackView.insertSubview(scrollLabel, aboveSubview: miniTitleLabel)
+        
+        scrollLabel.anchor(top: miniTitleLabel.topAnchor, paddingTop: 0, bottom: miniTitleLabel.bottomAnchor, paddingBottom: 0, left: miniTitleLabel.leftAnchor, paddingLeft: 0, right: miniTitleLabel.rightAnchor, paddingRight: 0, width: 0, height: 0)
+        scrollLabel.text = episode.title
+        miniTitleLabel.alpha = 0
+    }
+    
+    //MARK:- IBOutlet
 
+    @IBOutlet weak var miniImageView: UIImageView!
+    @IBOutlet weak var miniTitleLabel: UILabel!
+    @IBOutlet weak var miniPlayPauseBtn: UIButton! {
+        didSet{
+            miniPlayPauseBtn.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+            miniPlayPauseBtn.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        }
+    }
+    @IBOutlet weak var miniFastforwardBtn: UIButton! {
+        didSet{
+            miniFastforwardBtn.addTarget(self, action: #selector(handleFastfoward), for: .touchUpInside)
+            miniFastforwardBtn.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
+        }
+    }
+    @IBOutlet weak var miniPlayerView: UIView!
+    
+    @IBOutlet weak var miniStackView: UIStackView!
+    @IBOutlet weak var maximizedStackView: UIStackView!
     @IBOutlet weak var currentTimeSlider: UISlider!
+    
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var currentTimeLabel: UILabel!
-    @IBOutlet weak var playbtn: UIButton!
+    @IBOutlet weak var playbtn: UIButton! {
+        didSet{
+            playbtn.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
+        }
+    }
+    @IBOutlet weak var fastforwardBtn: UIButton! {
+        didSet{
+            fastforwardBtn.addTarget(self, action: #selector(handleFastfoward), for: .touchUpInside)
+        }
+    }
     @IBOutlet weak var episodeTitleLabel: UILabel! 
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var episodeImageView: UIImageView!{
@@ -34,7 +80,6 @@ class PlayerView: UIView {
             episodeImageView.transform = shrunkenTransform
         }
     }
-
     
     let player: AVPlayer = {
         let avPlayer = AVPlayer()
@@ -69,18 +114,16 @@ class PlayerView: UIView {
     
     //MARK:- IBActions
     
-    @IBAction func handleDismiss(_ sender: UIButton) {
-        self.removeFromSuperview()
-    }
-    
-    @IBAction func playPauseBtn(_ sender: UIButton) {
+    @objc func handlePlayPause(){
         if player.timeControlStatus == .paused {
             player.play()
-            sender.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            playbtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            miniPlayPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             enlargeEpisodeImageView()
         } else {
             player.pause()
-            sender.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            playbtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            miniPlayPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
             shrinkEpisodeImageView()
         }
     }
@@ -104,7 +147,7 @@ class PlayerView: UIView {
         seekTime(fromCurrent: -15)
     }
     
-    @IBAction func fastforwardBtn(_ sender: UIButton) {
+    @objc func handleFastfoward(){
         seekTime(fromCurrent: 15)
     }
     
@@ -150,7 +193,25 @@ class PlayerView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximize)))
+        
         observePlayerStarts()
         observePlayerCurrentTime()
+    }
+    
+    static func initFromNib() -> PlayerView {
+        return Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)?.first as! PlayerView
+    }
+    
+    //MARK:- max and minimize view
+    
+    @IBAction func handleDismiss(_ sender: UIButton) {
+        let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController
+        mainTabBarController?.minimizePlayerView()
+    }
+    
+    @objc func handleTapMaximize(){
+        let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarViewController
+        mainTabBarController?.maximizePlayerView(episode: nil)
     }
 }

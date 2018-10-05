@@ -82,11 +82,19 @@ class PodcastsSearchViewController: UITableViewController, UISearchBarDelegate {
         searchController.searchBar.delegate = self
     }
     
+//
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        APIService.shared.fetchPodcasts(searchText: searchBar.text ?? "") { (podcasts) in
+//            // load the data into table and refresh table
+//            self.podcasts = podcasts
+//            self.tableView.reloadData()
+//        }
+//    }
     // input delay timer
     var timer: Timer?
-    
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
 

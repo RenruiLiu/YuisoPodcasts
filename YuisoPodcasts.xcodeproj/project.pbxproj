@@ -27,6 +27,7 @@
 		EAFB95892165D8DC00D551D8 /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAFB95882165D8DC00D551D8 /* PlayerView.xib */; };
 		EAFB958B2165DC7500D551D8 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958A2165DC7500D551D8 /* PlayerView.swift */; };
 		EAFB958D21665D4900D551D8 /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958C21665D4900D551D8 /* CMTime.swift */; };
+		EAFB958F21671EB100D551D8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958E21671EB100D551D8 /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		EAFB95882165D8DC00D551D8 /* PlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
 		EAFB958A2165DC7500D551D8 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		EAFB958C21665D4900D551D8 /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
+		EAFB958E21671EB100D551D8 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				EAFB95842165D16700D551D8 /* String.swift */,
 				EAFB95862165D23C00D551D8 /* RSSFeed.swift */,
 				EAFB958C21665D4900D551D8 /* CMTime.swift */,
+				EAFB958E21671EB100D551D8 /* View.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-YuisoPodcasts/Pods-YuisoPodcasts-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/EFAutoScrollLabel/EFAutoScrollLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/FeedKit/FeedKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
@@ -282,6 +286,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EFAutoScrollLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FeedKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
@@ -309,6 +314,7 @@
 				EA8580482164994300EDB26D /* Podcast.swift in Sources */,
 				EA8580522164F23E00EDB26D /* EpisodeViewController.swift in Sources */,
 				EA8580502164E1A400EDB26D /* PodcastCell.swift in Sources */,
+				EAFB958F21671EB100D551D8 /* View.swift in Sources */,
 				EAFB958121652D2E00D551D8 /* EpisodeCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
