@@ -28,6 +28,7 @@
 		EAFB958B2165DC7500D551D8 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958A2165DC7500D551D8 /* PlayerView.swift */; };
 		EAFB958D21665D4900D551D8 /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958C21665D4900D551D8 /* CMTime.swift */; };
 		EAFB958F21671EB100D551D8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958E21671EB100D551D8 /* View.swift */; };
+		EAFB95912167598D00D551D8 /* PlayViewGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB95902167598D00D551D8 /* PlayViewGestures.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		EAFB958A2165DC7500D551D8 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		EAFB958C21665D4900D551D8 /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
 		EAFB958E21671EB100D551D8 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		EAFB95902167598D00D551D8 /* PlayViewGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewGestures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				EAFB958021652D2E00D551D8 /* EpisodeCell.xib */,
 				EAFB95882165D8DC00D551D8 /* PlayerView.xib */,
 				EAFB958A2165DC7500D551D8 /* PlayerView.swift */,
+				EAFB95902167598D00D551D8 /* PlayViewGestures.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				EA85803221646F3A00EDB26D /* ViewController.swift in Sources */,
 				EAFB95872165D23C00D551D8 /* RSSFeed.swift in Sources */,
 				EAFB958B2165DC7500D551D8 /* PlayerView.swift in Sources */,
+				EAFB95912167598D00D551D8 /* PlayViewGestures.swift in Sources */,
 				EAFB95852165D16700D551D8 /* String.swift in Sources */,
 				EA85803021646F3A00EDB26D /* AppDelegate.swift in Sources */,
 				EAFB958D21665D4900D551D8 /* CMTime.swift in Sources */,

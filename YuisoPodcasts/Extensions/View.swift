@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension UIApplication {
+    static func mainTabBarController() -> MainTabBarViewController? {
+        return shared.keyWindow?.rootViewController as? MainTabBarViewController
+    }
+}
+
 extension UIView{
     func anchor(top: NSLayoutYAxisAnchor?, paddingTop: CGFloat, bottom: NSLayoutYAxisAnchor?, paddingBottom: CGFloat, left: NSLayoutXAxisAnchor?, paddingLeft: CGFloat, right: NSLayoutXAxisAnchor?, paddingRight: CGFloat, width: CGFloat, height: CGFloat){
         translatesAutoresizingMaskIntoConstraints = false
