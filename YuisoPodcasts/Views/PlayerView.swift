@@ -8,36 +8,10 @@
 
 import UIKit
 import AVKit
+import MediaPlayer
 import EFAutoScrollLabel
 
 class PlayerView: UIView {
-
-    //MARK:- Setup
-    
-    var episode: Episode!{
-        didSet{
-            episodeTitleLabel.text = episode.title
-            authorLabel.text = episode.author
-            guard let url = URL(string: episode.imageUrl ?? "") else {return}
-            episodeImageView.sd_setImage(with: url, completed: nil)
-            
-            setupScrollTitle()
-            miniImageView.sd_setImage(with: url, completed: nil)
-            
-            playEpisode()
-            playbtn.isEnabled = false
-        }
-    }
-    
-    fileprivate func setupScrollTitle() {
-        let scrollLabel = EFAutoScrollLabel()
-        scrollLabel.font = UIFont.systemFont(ofSize: 15)
-        miniStackView.insertSubview(scrollLabel, aboveSubview: miniTitleLabel)
-        
-        scrollLabel.anchor(top: miniTitleLabel.topAnchor, paddingTop: 0, bottom: miniTitleLabel.bottomAnchor, paddingBottom: 0, left: miniTitleLabel.leftAnchor, paddingLeft: 0, right: miniTitleLabel.rightAnchor, paddingRight: 0, width: 0, height: 0)
-        scrollLabel.text = episode.title
-        miniTitleLabel.alpha = 0
-    }
     
     //MARK:- IBOutlet
 
@@ -134,6 +108,7 @@ class PlayerView: UIView {
         let durationInSec = CMTimeGetSeconds(duration)
         let seekTimeInSec = durationInSec * Float64(percentage)
         let seekTime = CMTimeMakeWithSeconds(seekTimeInSec, preferredTimescale: Int32(NSEC_PER_SEC))
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = seekTimeInSec
         player.seek(to: seekTime)
     }
     
@@ -187,15 +162,62 @@ class PlayerView: UIView {
             self?.enlargeEpisodeImageView()
             let durationTime = self?.player.currentItem?.duration
             self?.durationLabel.text = durationTime?.toDisplayString()
+            
+            //set up lock screen time
+            self?.setupLockScreenDuration()
+        }
+    }
+    
+    //MARK:- Setup
+    
+    var episode: Episode!{
+        didSet{
+            episodeTitleLabel.text = episode.title
+            authorLabel.text = episode.author
+            guard let url = URL(string: episode.imageUrl ?? "") else {return}
+            episodeImageView.sd_setImage(with: url, completed: nil)
+            
+            scrollLabel.text = episode.title
+            miniImageView.sd_setImage(with: url) { (image, _, _, _) in
+                // set lock screen artwork as well at the same time
+                let image = self.episodeImageView.image ?? UIImage()
+                let artwork = MPMediaItemArtwork(boundsSize: .zero, requestHandler: { (_) -> UIImage in
+                    return image
+                })
+                MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+            }
+            
+            playEpisode()
+            playbtn.isEnabled = false
+            
+            setupNowPlayingInfo()
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        setupScrollTitle()
         setupGestures()
         observePlayerStarts()
         observePlayerCurrentTime()
+        setupAudioSession()
+        setupRemoteControl()
+        setupRouteChange()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // scroll label
+    let scrollLabel = EFAutoScrollLabel()
+    fileprivate func setupScrollTitle() {
+        scrollLabel.font = UIFont.systemFont(ofSize: 15)
+        miniStackView.insertSubview(scrollLabel, aboveSubview: miniTitleLabel)
+        
+        scrollLabel.anchor(top: miniTitleLabel.topAnchor, paddingTop: 0, bottom: miniTitleLabel.bottomAnchor, paddingBottom: 0, left: miniTitleLabel.leftAnchor, paddingLeft: 0, right: miniTitleLabel.rightAnchor, paddingRight: 0, width: 0, height: 0)
+        miniTitleLabel.alpha = 0
     }
     
     static func initFromNib() -> PlayerView {
@@ -237,6 +259,81 @@ class PlayerView: UIView {
             })
         }
     }
+    
+    //MARK:- background play
+    
+    fileprivate func setupAudioSession(){
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch let sessionErr {
+            print("Failed to activate session:", sessionErr)
+        }
+    }
 
+    fileprivate func setupRemoteControl(){
+        
+        // access the remote controller
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+
+        let commandCenter = MPRemoteCommandCenter.shared()
+
+        // control play pause, like button in earphone
+        commandCenter.togglePlayPauseCommand.isEnabled = true
+        commandCenter.togglePlayPauseCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            self.handlePlayPause()
+            self.setupLockScreenElapsedTime()
+            return .success
+        }
+
+    }
+    
+    // detect earphone plug in/out
+    fileprivate func setupRouteChange(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRouteChanged), name: AVAudioSession.routeChangeNotification, object: nil)
+    }
+    
+    @objc func handleRouteChanged(note: Notification){
+        if let userInfo = note.userInfo {
+            // reason 2: plug out earphone
+            // reason 1: plug in earphones
+            if let reason = userInfo[AVAudioSessionRouteChangeReasonKey] as? Int, reason == 2 {
+                print("time to do sm")
+                changePlayButtonImage()
+            }
+        }
+    }
+    
+    func changePlayButtonImage(){
+        DispatchQueue.main.async {
+            self.player.pause()
+            self.playbtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            self.miniPlayPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+        }
+    }
+    
+    //MARK:- lock screen
+    
+    fileprivate func setupNowPlayingInfo(){
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = episode.title
+        nowPlayingInfo[MPMediaItemPropertyArtist] = episode.author
+        
+        // the lock screen center
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    fileprivate func setupLockScreenDuration(){
+        
+        // set duration // magically it gets current time as well
+        guard let currentItem = player.currentItem else {return}
+        let durationInSec = CMTimeGetSeconds(currentItem.duration)
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSec
+    }
+    
+    fileprivate func setupLockScreenElapsedTime(){
+        let elapsedTime = CMTimeGetSeconds(player.currentTime())
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedTime
+    }
     
 }
