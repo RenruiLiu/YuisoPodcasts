@@ -62,11 +62,11 @@ class PlayerView: UIView {
     }()
     
     fileprivate func playEpisode(){
-        
         guard let url = URL(string: episode.streamUrl) else {return}
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()
+        playbtn.isEnabled = false
     }
     
     //MARK:- animation
@@ -88,21 +88,23 @@ class PlayerView: UIView {
     
     //MARK:- IBActions
     
-    @objc func handlePlayPause(){
+    @objc fileprivate func handlePlayPause(){
         if player.timeControlStatus == .paused {
             player.play()
             playbtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             miniPlayPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             enlargeEpisodeImageView()
+            self.setupLockScreenElapsedTime(playbackRate: 1)
         } else {
             player.pause()
             playbtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
             miniPlayPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
             shrinkEpisodeImageView()
+            self.setupLockScreenElapsedTime(playbackRate: 0)
         }
     }
     
-    @IBAction func handleCurrentTimeSliderChange(_ sender: UISlider) {
+    @IBAction fileprivate func handleCurrentTimeSliderChange(_ sender: UISlider) {
         let percentage = sender.value
         guard let duration = player.currentItem?.duration else {return}
         let durationInSec = CMTimeGetSeconds(duration)
@@ -118,15 +120,15 @@ class PlayerView: UIView {
         player.seek(to: seekTime)
     }
     
-    @IBAction func rewindBtn(_ sender: UIButton) {
+    @IBAction fileprivate func rewindBtn(_ sender: UIButton) {
         seekTime(fromCurrent: -15)
     }
     
-    @objc func handleFastfoward(){
+    @objc fileprivate func handleFastfoward(){
         seekTime(fromCurrent: 15)
     }
     
-    @IBAction func handleVolumeChange(_ sender: UISlider) {
+    @IBAction fileprivate func handleVolumeChange(_ sender: UISlider) {
         player.volume = sender.value
     }
     
@@ -188,7 +190,7 @@ class PlayerView: UIView {
             }
             
             playEpisode()
-            playbtn.isEnabled = false
+            setupAudioSession()
             
             setupNowPlayingInfo()
         }
@@ -201,9 +203,9 @@ class PlayerView: UIView {
         setupGestures()
         observePlayerStarts()
         observePlayerCurrentTime()
-        setupAudioSession()
         setupRemoteControl()
         setupRouteChange()
+        setupInterruptionObserver()
     }
     
     deinit {
@@ -277,14 +279,27 @@ class PlayerView: UIView {
         UIApplication.shared.beginReceivingRemoteControlEvents()
 
         let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            self.handlePlayPause()
+            return .success
+        }
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
+            self.handlePlayPause()
+            return .success
+        }
 
         // control play pause, like button in earphone
         commandCenter.togglePlayPauseCommand.isEnabled = true
         commandCenter.togglePlayPauseCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
             self.handlePlayPause()
-            self.setupLockScreenElapsedTime()
             return .success
         }
+        
+        commandCenter.nextTrackCommand.addTarget(self, action: #selector(handleNextTrack))
+        commandCenter.previousTrackCommand.addTarget(self, action: #selector(handlePreviousTrack))
 
     }
     
@@ -331,9 +346,76 @@ class PlayerView: UIView {
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSec
     }
     
-    fileprivate func setupLockScreenElapsedTime(){
+    fileprivate func setupLockScreenElapsedTime(playbackRate: Float){
         let elapsedTime = CMTimeGetSeconds(player.currentTime())
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedTime
+        
+        // playback rate fixes that OS think the track is still playing when you actually pause it
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyPlaybackRate] = playbackRate
     }
+    
+    //MARK:- pre next track
+    
+    var playListEpisodes = [Episode]()
+    
+    @objc fileprivate func handleNextTrack(){
+        print("next")
+        changeToNextOrPreviousTrack(toNext: true)
+    }
+    
+    @objc fileprivate func handlePreviousTrack(){
+        print("pre")
+        changeToNextOrPreviousTrack(toNext: false)
+    }
+    
+    fileprivate func changeToNextOrPreviousTrack(toNext: Bool){
+        if playListEpisodes.count == 0 {return}
+        let currentEpisodeIndex = playListEpisodes.firstIndex { (ep) -> Bool in
+            return self.episode.title == ep.title && self.episode.author == ep.author
+        }
+        guard let index = currentEpisodeIndex else {return}
+        let nextEpisode: Episode
+        
+        if toNext {
+            if index == playListEpisodes.count - 1 {
+                nextEpisode = playListEpisodes[0]
+            } else {
+                nextEpisode = playListEpisodes[index + 1]
+            }
+        } else {
+            if index == 0 {
+                nextEpisode = playListEpisodes[playListEpisodes.count - 1]
+            } else {
+                nextEpisode = playListEpisodes[index - 1]
+            }
+        }
+        self.episode = nextEpisode
+        print(nextEpisode.title)
+    }
+    
+    //MARK:- handle interruption
+    
+    fileprivate func setupInterruptionObserver(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    @objc fileprivate func handleInterruption(note: Notification){
+        guard let userinfo = note.userInfo else {return}
+        guard let type = userinfo[AVAudioSessionInterruptionTypeKey] as? UInt else {return}
+        if type == AVAudioSession.InterruptionType.began.rawValue {
+            // pause it
+            playbtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            miniPlayPauseBtn.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+        } else {
+            // interruption ended // resume
+            guard let options = userinfo[AVAudioSessionInterruptionOptionKey] as? UInt else {return}
+            if options == AVAudioSession.InterruptionOptions.shouldResume.rawValue {
+                player.play()
+                playbtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+                miniPlayPauseBtn.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            }
+        }
+    }
+    
     
 }
