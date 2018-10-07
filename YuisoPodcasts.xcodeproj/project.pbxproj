@@ -29,6 +29,9 @@
 		EAFB958D21665D4900D551D8 /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958C21665D4900D551D8 /* CMTime.swift */; };
 		EAFB958F21671EB100D551D8 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB958E21671EB100D551D8 /* View.swift */; };
 		EAFB95912167598D00D551D8 /* PlayViewGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB95902167598D00D551D8 /* PlayViewGestures.swift */; };
+		EAFB95932169E2BB00D551D8 /* FavouritesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB95922169E2BB00D551D8 /* FavouritesCollectionViewController.swift */; };
+		EAFB95952169F10F00D551D8 /* FavoritePodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB95942169F10F00D551D8 /* FavoritePodcastCell.swift */; };
+		EAFB9597216A108C00D551D8 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFB9596216A108C00D551D8 /* UserDefaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,9 @@
 		EAFB958C21665D4900D551D8 /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
 		EAFB958E21671EB100D551D8 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		EAFB95902167598D00D551D8 /* PlayViewGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewGestures.swift; sourceTree = "<group>"; };
+		EAFB95922169E2BB00D551D8 /* FavouritesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesCollectionViewController.swift; sourceTree = "<group>"; };
+		EAFB95942169F10F00D551D8 /* FavoritePodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePodcastCell.swift; sourceTree = "<group>"; };
+		EAFB9596216A108C00D551D8 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,7 @@
 				EA85804121646FA100EDB26D /* MainTabBarViewController.swift */,
 				EA858044216498D100EDB26D /* PodcastsSearchViewController.swift */,
 				EA8580512164F23E00EDB26D /* EpisodeViewController.swift */,
+				EAFB95922169E2BB00D551D8 /* FavouritesCollectionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -161,6 +168,7 @@
 				EAFB95882165D8DC00D551D8 /* PlayerView.xib */,
 				EAFB958A2165DC7500D551D8 /* PlayerView.swift */,
 				EAFB95902167598D00D551D8 /* PlayViewGestures.swift */,
+				EAFB95942169F10F00D551D8 /* FavoritePodcastCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -172,6 +180,7 @@
 				EAFB95862165D23C00D551D8 /* RSSFeed.swift */,
 				EAFB958C21665D4900D551D8 /* CMTime.swift */,
 				EAFB958E21671EB100D551D8 /* View.swift */,
+				EAFB9596216A108C00D551D8 /* UserDefaults.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -324,7 +333,10 @@
 				EA8580522164F23E00EDB26D /* EpisodeViewController.swift in Sources */,
 				EA8580502164E1A400EDB26D /* PodcastCell.swift in Sources */,
 				EAFB958F21671EB100D551D8 /* View.swift in Sources */,
+				EAFB9597216A108C00D551D8 /* UserDefaults.swift in Sources */,
 				EAFB958121652D2E00D551D8 /* EpisodeCell.swift in Sources */,
+				EAFB95952169F10F00D551D8 /* FavoritePodcastCell.swift in Sources */,
+				EAFB95932169E2BB00D551D8 /* FavouritesCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,7 +493,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = RenruiLiu.YuisoPodcasts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -500,7 +512,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = RenruiLiu.YuisoPodcasts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -12,7 +12,6 @@ import FeedKit
 class EpisodeViewController: UITableViewController {
 
     fileprivate let cellID = "cellID"
-    
 
     var episodes = [Episode]()
     
@@ -22,12 +21,62 @@ class EpisodeViewController: UITableViewController {
             fetchEpisodes()
         }
     }
-    
+
+    var savedPodcasts = UserDefaults.standard.savedPodcasts()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTableView()
+        setupNavigationBarButtons()
     }
+    
+    fileprivate func setupNavigationBarButtons(){
+        
+        // check isPodcastFavorited
+        let hasFavorited = savedPodcasts.firstIndex(where: { $0.trackName == self.podcast?.trackName && $0.artistName == self.podcast?.artistName}) != nil
+        if hasFavorited {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Unfavorite", style: .plain, target: self, action: #selector(handleUnfavorite))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(handleFavorite))
+        }
+    }
+    
+    @objc fileprivate func handleFavorite(){
+        var podcastsList = UserDefaults.standard.savedPodcasts()
+        guard let podcast = self.podcast else {return}
+        podcastsList.append(podcast)
+        UserDefaults.standard.setPodcasts(podcasts: podcastsList)
+        
+        // set badge
+        showBadgeHighlight()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Unfavorite", style: .plain, target: self, action: #selector(handleUnfavorite))
+    }
+    
+    fileprivate func showBadgeHighlight(){
+        UIApplication.mainTabBarController()?.viewControllers?[0].tabBarItem.badgeValue = "New"
+    }
+    
+    @objc fileprivate func handleUnfavorite(){
+        
+        // get index and remove it from list
+        guard let podcastIndex = savedPodcasts.firstIndex(where: { $0.trackName == self.podcast?.trackName && $0.artistName == self.podcast?.artistName}) else {return}
+        savedPodcasts.remove(at: podcastIndex)
+        
+        // present alert sheet
+        let alertController = UIAlertController(title: "Remove Podcast?", message: nil, preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+            
+            // remove it from UserDefaults
+            UserDefaults.standard.setPodcasts(podcasts: self.savedPodcasts)
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(self.handleFavorite))
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
+
+        
+    }
+    
     
     //MARK:- table config
     
