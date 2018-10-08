@@ -121,7 +121,17 @@ class EpisodeViewController: UITableViewController {
         let episode = self.episodes[indexPath.row]
 
         UIApplication.mainTabBarController()?.maximizePlayerView(episode: episode, playListEpisodes: self.episodes)
-        
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let downloadAction = UITableViewRowAction(style: .normal, title: "Download") { (_, _indexpath) in
+            let episode = self.episodes[indexPath.row]
+            UserDefaults.standard.downloadEpisode(episode: episode)
+            
+            //
+            APIService.shared.downloadEpisode(episode: episode)
+        }
+        return [downloadAction]
     }
     
     //MARK:- fetch Episodes
@@ -135,4 +145,5 @@ class EpisodeViewController: UITableViewController {
             }
         }
     }
+    
 }

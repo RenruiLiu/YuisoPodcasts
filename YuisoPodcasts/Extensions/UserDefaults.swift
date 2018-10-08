@@ -11,6 +11,7 @@ import Foundation
 extension UserDefaults {
     
     static let favoritedPodcastKey = "favoritedPodcastKey"
+    static let downloadedEpisodeKey = "downloadedEpisodeKey"
     
     func savedPodcasts() -> [Podcast] {
 
@@ -30,5 +31,36 @@ extension UserDefaults {
         } catch let err {
             print(err)
         }
+    }
+    
+    func downloadEpisode(episode: Episode){
+        do {
+            var episodes = downloadedEpisodes()
+            episodes.append(episode)
+            let data = try JSONEncoder().encode(episodes)
+            UserDefaults.standard.set(data, forKey: UserDefaults.downloadedEpisodeKey)
+            
+        } catch let encodeErr {print("Failed to encode:", encodeErr)}
+    }
+    
+    func downloadedEpisodes() -> [Episode]{
+        guard let episodeData = data(forKey: UserDefaults.downloadedEpisodeKey) else {return []}
+        
+        do {
+            let episodes = try JSONDecoder().decode([Episode].self, from: episodeData)
+            return episodes
+        } catch let decodeErr {print("Failed to decode:",decodeErr)}
+        return []
+    }
+    
+    func deleteEpisode(episode: Episode) {
+        let episodes = downloadedEpisodes()
+        let filteredEpisodes = episodes.filter { (e) -> Bool in
+            return e.title != episode.title || e.author != episode.author
+        }
+        do {
+            let data = try JSONEncoder().encode(filteredEpisodes)
+            UserDefaults.standard.set(data, forKey: UserDefaults.downloadedEpisodeKey)
+        } catch let encodeErr {print("Failed to encode:", encodeErr)}
     }
 }

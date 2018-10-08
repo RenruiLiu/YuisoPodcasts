@@ -38,13 +38,14 @@ class Podcast:NSObject, Decodable, NSCoding, NSSecureCoding {
     }
 }
 
-struct Episode {
+struct Episode: Codable {
     let pubDate: Date
     let description: String
     let title: String
     var imageUrl: String?
     let author: String
     let streamUrl: String
+    var fileUrl: String?
     
     init(feedItem: RSSFeedItem) {
         title = feedItem.title ?? ""

@@ -17,6 +17,29 @@ class APIService {
     // itunes API
     let iTunesSearchURL = "https://itunes.apple.com/search"
     
+    func downloadEpisode(episode: Episode){
+        // store file in file manager
+        let downloadRequest = DownloadRequest.suggestedDownloadDestination()
+        Alamofire.download(episode.streamUrl, to: downloadRequest).downloadProgress { (progress) in
+            // completion percetage: progress.fractionCompleted
+            print(progress.fractionCompleted)
+            }.response { (response) in
+                // the location of downloaded file : response.destinationURL?.absoluteString
+                var downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
+                guard let index = downloadedEpisodes.firstIndex(where: { (ep) -> Bool in
+                    ep.title == episode.title && ep.author == episode.author
+                }) else {return}
+                // get the episode and append a url on it
+                downloadedEpisodes[index].fileUrl = response.destinationURL?.absoluteString ?? ""
+                do {
+                    let data = try JSONEncoder().encode(downloadedEpisodes)
+                    UserDefaults.standard.set(data, forKey: UserDefaults.downloadedEpisodeKey)
+                    UIApplication.mainTabBarController()?.viewControllers?[2].tabBarItem.badgeValue = "New"
+                    
+                } catch let encodeErr {print("Failed to encode:", encodeErr)}
+        }
+    }
+    
     func fetchEpisodes(feedUrl: String, completionHandler: @escaping ([Episode])->()){
         guard let url = URL(string: feedUrl) else {return}
         
