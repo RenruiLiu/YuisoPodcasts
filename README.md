@@ -22,8 +22,6 @@ parse RSS(XML) -> [FeedKit](https://github.com/nmdias/FeedKit)
 scroll label at miniplayer -> [EFAutoScrollLabel](https://github.com/EyreFree/EFAutoScrollLabel)  
 
 # TODO
-1. speed play
-2. remove download file
 
 # LICENSE
 YuisoPodcasts is licensed under [MIT](https://github.com/RenruiLiu/YuisoPodcasts/blob/master/LICENSE)
