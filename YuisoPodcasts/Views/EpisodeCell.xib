@@ -48,11 +48,21 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYR-gK-Cqc">
+                        <rect key="frame" x="29" y="63" width="74" height="34.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="28"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <size key="shadowOffset" width="0.0" height="1"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="yOx-GG-fzS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0D3-pq-KCy"/>
+                    <constraint firstItem="pYR-gK-Cqc" firstAttribute="centerY" secondItem="gx2-xB-uYw" secondAttribute="centerY" id="HFd-5P-r0C"/>
                     <constraint firstItem="gx2-xB-uYw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="aLZ-mw-71v"/>
                     <constraint firstItem="yOx-GG-fzS" firstAttribute="leading" secondItem="gx2-xB-uYw" secondAttribute="trailing" constant="16" id="mz0-m8-caQ"/>
+                    <constraint firstItem="pYR-gK-Cqc" firstAttribute="centerX" secondItem="gx2-xB-uYw" secondAttribute="centerX" id="u9S-zi-gZp"/>
                     <constraint firstItem="gx2-xB-uYw" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="v9p-9L-4xc"/>
                     <constraint firstAttribute="trailingMargin" secondItem="yOx-GG-fzS" secondAttribute="trailing" constant="16" id="yH6-6c-v30"/>
                 </constraints>
@@ -61,6 +71,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="yLb-rY-fat" id="I6G-J6-Y7Y"/>
                 <outlet property="episodeImageVIew" destination="gx2-xB-uYw" id="kez-fx-sDs"/>
+                <outlet property="progressLabel" destination="pYR-gK-Cqc" id="rgK-RM-x9k"/>
                 <outlet property="pubDateLabel" destination="uh7-Vg-WHi" id="r0A-c9-vJw"/>
                 <outlet property="titleLabel" destination="JSb-IB-2Il" id="Ajk-1M-kOv"/>
             </connections>

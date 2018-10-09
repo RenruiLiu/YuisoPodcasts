@@ -65,24 +65,14 @@ class PlayerView: UIView {
         guard var url = URL(string: episode.streamUrl) else {return}
         if episode.fileUrl != nil {
             // play file locally
-            url = getLocalLocation(url: url)
+            guard let fileURL = URL(string: episode.fileUrl ?? "") else {return}
+            url = getLocalLocation(fileURL: fileURL)
         }
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()
         playbtn.isEnabled = false
     }
-    
-    fileprivate func getLocalLocation(url: URL) -> URL{
-        // get the name of file
-        guard let fileURL = URL(string: episode.fileUrl ?? "") else {return url}
-        let fileName = fileURL.lastPathComponent
-        // get the directory of application document (because it changes often)
-        guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {return url}
-        trueLocation.appendPathComponent(fileName)
-        return trueLocation
-    }
-    
     
     //MARK:- animation
     

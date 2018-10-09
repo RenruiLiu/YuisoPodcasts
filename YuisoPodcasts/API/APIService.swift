@@ -10,7 +10,15 @@ import Foundation
 import Alamofire
 import FeedKit
 
+extension Notification.Name {
+    static let downloadProgress = NSNotification.Name("downloadProgress")
+    static let downloadComplete = NSNotification.Name("downloadComplete")
+}
+
 class APIService {
+    
+    typealias EpisodeDownloadCompleteTuple = (fileUrl: String, episodeTitle: String)
+    
     static let shared = APIService()
     // so can call functions in the class like: APISerice.shared.fetchxxx()
     
@@ -22,8 +30,14 @@ class APIService {
         let downloadRequest = DownloadRequest.suggestedDownloadDestination()
         Alamofire.download(episode.streamUrl, to: downloadRequest).downloadProgress { (progress) in
             // completion percetage: progress.fractionCompleted
-            print(progress.fractionCompleted)
+            
+            NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])            
+            
             }.response { (response) in
+                // notify download complete
+                let episodeDownloadComplete = EpisodeDownloadCompleteTuple(response.destinationURL?.absoluteString ?? "", episode.title)
+                NotificationCenter.default.post(name: .downloadComplete, object: episodeDownloadComplete, userInfo: nil)
+                
                 // the location of downloaded file : response.destinationURL?.absoluteString
                 var downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
                 guard let index = downloadedEpisodes.firstIndex(where: { (ep) -> Bool in
