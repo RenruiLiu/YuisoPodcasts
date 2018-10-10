@@ -19,11 +19,11 @@ class MainTabBarViewController: UITabBarController {
         setupPlayerView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        // set default tab is search
-        self.selectedIndex = 1
-    }
-    
+//    override func viewWillAppear(_ animated: Bool) {
+//        // set default tab is search
+//        self.selectedIndex = 0
+//    }
+//    
     //MARK:- Setup Functions
     
     fileprivate func setupViewControllers(){
