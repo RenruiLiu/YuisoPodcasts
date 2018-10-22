@@ -5,9 +5,9 @@
 
 # Download
 Clone this repo to your local disk and run in xcode  
-<kbd><img scr="https://github.com/RenruiLiu/YuisoPodcasts/blob/9ce505f338d2c90263fe9b2da3ab71e9a1ae5528/screenshot1.png" width="300"></kbd>
-<kbd><img scr="https://github.com/RenruiLiu/YuisoPodcasts/blob/9ce505f338d2c90263fe9b2da3ab71e9a1ae5528/screenshot2.png" width="300"></kbd>
-<kbd><img scr="https://github.com/RenruiLiu/YuisoPodcasts/blob/9ce505f338d2c90263fe9b2da3ab71e9a1ae5528/screenshot3.png" width="300"></kbd>  
+<kbd><img scr="https://github.com/RenruiLiu/YuisoPodcasts/blob/master/screenshot1.png" width="300"></kbd>
+<kbd><img scr="https://github.com/RenruiLiu/YuisoPodcasts/blob/master/screenshot2.png" width="300"></kbd>
+<kbd><img scr="https://github.com/RenruiLiu/YuisoPodcasts/blob/master/screenshot3.png" width="300"></kbd>  
 
 # Features
 1. Search podcasts on itunes
