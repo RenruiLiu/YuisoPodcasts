@@ -13,6 +13,7 @@ Clone this repo to your local disk and run in xcode
 1. Search podcasts on itunes
 2. Favourite 
 3. Download podcasts in local and play it offline
+4. git who
 
 # Platform Requires / Limits
 1. `iOS 11.4+`  
