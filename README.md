@@ -17,6 +17,7 @@ Clone this repo to your local disk and run in xcode
 
 # Platform Requires / Limits
 1. `iOS 11.4+`  
+2. 访问Episode和播放音频需要梯子
 
 # Used libraries
 Network -> [Alamofire](https://github.com/Alamofire/Alamofire)  
